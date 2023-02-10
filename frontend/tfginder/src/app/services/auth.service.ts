@@ -8,7 +8,7 @@ export class AuthService {
 
   constructor(private auth: Auth) { }
 
-  login(email: string, password: string){
+  async login(email: string, password: string){
     try {
       const userCredential = signInWithEmailAndPassword(this.auth, email, password);
       return userCredential;
@@ -20,9 +20,9 @@ export class AuthService {
 
   logout(){ return signOut(this.auth);}
 
-  register(email: string, password: string){
+  async register(email: string, password: string){
     try {
-      const userCredential = createUserWithEmailAndPassword(this.auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
       return userCredential;
     } catch (error) {
       console.log(error);
