@@ -20,7 +20,8 @@ export class LoginPage implements OnInit {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController
   ) { }
-  
+
+  // Getters for form fields
   get password() { return this.validations_form.get('password'); }
   get email() { return this.validations_form.get('email'); }
 
@@ -37,4 +38,34 @@ export class LoginPage implements OnInit {
     });
   }
 
+  // Login and register functions
+  
+  async login(){
+    const loading = await this.loadingCtrl.create();
+    await loading.present();
+    const user = await this.authService.login(this.validations_form.value);
+    await loading.dismiss();
+    if(user){
+      await this.router.navigateByUrl('/home', { replaceUrl: true });
+    } else {
+      await this.showAlert('Error', 'Invalid email or password');
+    }
+  }
+
+  async showAlert(header: string, message: string){
+    const alert = await this.alertCtrl.create({ header, message, buttons: ['OK'] });
+    await alert.present();
+  }
+
+  async register(){
+    const loading = await this.loadingCtrl.create();
+    await loading.present();
+    const user = await this.authService.register(this.validations_form.value);
+    await loading.dismiss();
+    if(user){
+      await this.router.navigateByUrl('/home', { replaceUrl: true });
+    } else {
+      await this.showAlert('Error', 'Try again !');
+    }
+  }
 }
