@@ -1,0 +1,7 @@
+{
+  "name": "tfginder",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
